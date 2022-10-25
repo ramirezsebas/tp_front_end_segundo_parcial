@@ -1,10 +1,13 @@
-
 import 'package:flutter/material.dart';
+
 
 class CardFooter extends StatelessWidget {
   const CardFooter({
     Key? key,
+    required this.onDelete,
   }) : super(key: key);
+
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class CardFooter extends StatelessWidget {
         ),
         const Spacer(),
         ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: onDelete,
           icon: const Icon(Icons.delete_outline),
           label: const Text("Eliminar"),
         ),
