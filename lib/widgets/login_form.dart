@@ -15,6 +15,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +33,21 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextFormField(
             controller: _passwordController,
-            decoration: const InputDecoration(
+            obscureText: !isPasswordVisible,
+            decoration: InputDecoration(
               labelText: "Contraseña",
               hintText: "Ingrese su contraseña",
-              icon: Icon(Icons.lock),
+              icon: const Icon(Icons.lock),
+              suffixIcon: IconButton(
+                icon: Icon(isPasswordVisible
+                    ? Icons.visibility
+                    : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
+              ),
             ),
           ),
           ElevatedButton(
