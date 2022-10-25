@@ -44,6 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
         index: currentPage,
         children: _pages,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          /// Si currentPage es 0, entonces estamos en la pantalla de Ficha Clinica
+          /// Si currentPage es 1, entonces estamos en la pantalla de Reserva Turno
+          /// Si currentPage es 2, entonces estamos en la pantalla de Pacientes
+          ///
+          if (currentPage == 0) {
+            Navigator.of(context).pushNamed('/createFichaClinica');
+          }
+          // TODO: Implementar la navegacion a la pantalla de Crear Paciente
+          // TODO: Implementar la navegacion a la pantalla de Crear Reserva
+        },
+        child: const Icon(Icons.add),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (value) {
