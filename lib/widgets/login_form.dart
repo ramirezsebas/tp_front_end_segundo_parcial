@@ -40,24 +40,32 @@ class _LoginFormState extends State<LoginForm> {
           ),
           ElevatedButton(
             onPressed: () async {
-              AuthService authService = AuthService();
-              try {
-                final isValidUser = await authService.login(
-                    _emailController.text, _passwordController.text);
+              if (_formKey.currentState!.validate()) {
+                AuthService authService = AuthService();
+                try {
+                  final isValidUser = await authService.login(
+                      _emailController.text, _passwordController.text);
 
-                if (isValidUser) {
-                  Navigator.pushReplacementNamed(context, '/home');
-                } else {
+                  if (isValidUser) {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Usuario o contraseña incorrectos'),
+                      ),
+                    );
+                  }
+                } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Usuario o contraseña incorrectos'),
+                      content: Text('Error al iniciar sesión'),
                     ),
                   );
                 }
-              } catch (e) {
+              } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Error al iniciar sesión'),
+                    content: Text('Complete los campos'),
                   ),
                 );
               }
