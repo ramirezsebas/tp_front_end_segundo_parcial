@@ -5,10 +5,10 @@ import '../models/persona_model.dart';
 class AuthService {
   PersonaService personaService = PersonaService();
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login(String usuario, String password) async {
     final personas = await personaService.getPersonasDelSistema();
     final List<PersonaModel> persona =
-        personas.where((element) => element.email == email).toList();
+        personas.where((element) => element.usuarioLogin == usuario).toList();
 
     return persona.isNotEmpty;
   }

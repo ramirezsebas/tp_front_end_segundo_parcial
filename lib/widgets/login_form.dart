@@ -13,7 +13,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _usuarioController = TextEditingController();
   final _passwordController = TextEditingController();
   bool isPasswordVisible = false;
 
@@ -24,10 +24,10 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
-            controller: _emailController,
+            controller: _usuarioController,
             decoration: const InputDecoration(
-              labelText: "Email",
-              hintText: "Ingrese su email",
+              labelText: "Usuario",
+              hintText: "Ingrese su usuario",
               icon: Icon(Icons.email),
             ),
           ),
@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
                 AuthService authService = AuthService();
                 try {
                   final isValidUser = await authService.login(
-                      _emailController.text, _passwordController.text);
+                      _usuarioController.text, _passwordController.text);
 
                   if (isValidUser) {
                     Navigator.pushReplacementNamed(context, '/home');
