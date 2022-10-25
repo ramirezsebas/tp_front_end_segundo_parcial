@@ -20,4 +20,28 @@ class FichaClinicaService {
       throw ServerException(message: 'Failed to load data');
     }
   }
+
+  Future<bool> deleteFichaClinica(int id) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/fichaClinica/$id";
+
+    final resp = await dio.delete(url);
+
+    if (resp.statusCode == 200) {
+      return true;
+    } else {
+      throw ServerException(message: 'Failed to load data');
+    }
+  }
+
+  Future<bool> updateFichaClinica(FichaClinicaModel fichaClinica) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/fichaClinica";
+
+    final resp = await dio.put(url, data: fichaClinica.toJson());
+
+    if (resp.statusCode == 200) {
+      return true;
+    } else {
+      throw ServerException(message: 'Failed to load data');
+    }
+  }
 }
