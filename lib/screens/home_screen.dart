@@ -19,6 +19,32 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   int currentPage = 0;
 
+  Future<bool?> _showMyDialog() async {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Deseas Cerrar Sesion?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: const Text('Si'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              // OPen dialog asking for confirmation
+              // If confirmed, navigate to login screen
+              _showMyDialog().then((value) {
+                if (value != null && value) {
+                  Navigator.of(context).pushReplacementNamed('/login');
+                }
+              });
             },
             icon: const Icon(Icons.logout),
           ),
