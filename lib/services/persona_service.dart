@@ -31,6 +31,30 @@ class PersonaService {
       final personas = respData.map((e) => PersonaModel.fromJson(e)).toList();
       return personas;
     } else {
+      throw ServerException(message: 'No se pudo obtener los datos');
+    }
+  }
+
+  Future<String> createPersona(PersonaModel persona) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/persona";
+
+    final resp = await dio.post(url, data: persona.toJson());
+
+    if (resp.statusCode == 200) {
+      return resp.data;
+    } else {
+      throw ServerException(message: 'Failed to load data');
+    }
+  }
+
+  Future<String> updatePersona(PersonaModel persona) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/persona";
+
+    final resp = await dio.put(url, data: persona.toJson());
+
+    if (resp.statusCode == 200) {
+      return resp.data;
+    } else {
       throw ServerException(message: 'Failed to load data');
     }
   }

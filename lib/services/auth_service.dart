@@ -8,7 +8,7 @@ class AuthService {
   Future<bool> login(String usuario, String password) async {
     final personas = await personaService.getPersonasDelSistema();
     final List<PersonaModel> persona =
-        personas.where((element) => element.usuarioLogin == usuario).toList();
+        personas.where((element) => element.nombre == usuario).toList();
 
     return persona.isNotEmpty;
   }
