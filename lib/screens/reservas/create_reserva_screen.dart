@@ -13,7 +13,7 @@ class CreateReservaScreen extends StatelessWidget {
       ),
       body:  SingleChildScrollView(
         child: Column(
-          children:[
+          children:const [
             Text("Agenda"),
             FilterAgendaWidget(),
           ],

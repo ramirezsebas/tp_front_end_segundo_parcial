@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tp_front_end_segundo_parcial/services/reserva_service.dart';
 
 import '../../models/persona_model.dart';
 import '../../services/persona_service.dart';
@@ -15,8 +16,7 @@ class FilterAgendaWidget extends StatefulWidget {
 
 class _FilterAgendaWidget extends State<FilterAgendaWidget> {
   final _formKey = GlobalKey<FormState>();
-  String? dropdownvalueEmpleados;
-  String? dropdownvalueClientes;
+  PersonaModel? dropdownvalueEmpleados;
   TextEditingController dateInit = TextEditingController();
   TextEditingController dateEnd = TextEditingController();
   PersonaModel? EmpleadoActual;
@@ -81,7 +81,7 @@ class _FilterAgendaWidget extends State<FilterAgendaWidget> {
                                         hint: const Text('Empleados...'),
                                         items: data.map((item) {
                                           return DropdownMenuItem(
-                                            value: item.idPersona.toString(),
+                                            value: item,
                                             child: Text(item.nombre.toString()),
                                           );
                                         }).toList(),
@@ -91,43 +91,6 @@ class _FilterAgendaWidget extends State<FilterAgendaWidget> {
                                           });
                                         },
                                         value: dropdownvalueEmpleados,
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return const CircularProgressIndicator();
-                                }
-                              },
-                            ),
-                            FutureBuilder<List<PersonaModel>>(
-                              future: getPersonas(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  var data = snapshot.data!;
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Cliente:   ",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      DropdownButton(
-                                        hint: const Text('Clientes...'),
-                                        items: data.map((item) {
-                                          return DropdownMenuItem(
-                                            value: item.toString(),
-                                            child: Text(item.nombre.toString()),
-                                          );
-                                        }).toList(),
-                                        onChanged: (newVal) {
-                                          setState(() {
-                                            dropdownvalueClientes = newVal;
-                                          });
-                                        },
-                                        value: dropdownvalueClientes,
                                       )
                                     ],
                                   );
@@ -177,19 +140,29 @@ class _FilterAgendaWidget extends State<FilterAgendaWidget> {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
+                          ReservaService reservaService = ReservaService();
+                          try {
+                            final isValidUser = await reservaService
+                                .getAgenda(dropdownvalueEmpleados?.idPersona);
+                            print(dropdownvalueEmpleados);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Error al iniciar sesión '),
+                              ),
+                            );
+                          }
+                        } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text(
-                                    'Cargando datos:${dropdownvalueClientes!}')),
+                            const SnackBar(
+                              content: Text('Complete los campos'),
+                            ),
                           );
                         }
                       },
-                      child: const Text('Obtener horario'),
+                      child:  Text('Obtener Horario $dropdownvalueEmpleados'),
                     ),
                   ]))),
         ));

@@ -21,7 +21,7 @@ class ReservaService {
     }
   }
 
-  Future<List<ReservaModel>> getAgenda(int id) async {
+  Future<List<ReservaModel>> getAgenda(num? id) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/persona/$id";
 
     final resp = await dio.get(url);
