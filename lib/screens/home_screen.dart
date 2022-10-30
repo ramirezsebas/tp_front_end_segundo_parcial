@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
-import 'package:tp_front_end_segundo_parcial/screens/reserva_turnos_screen.dart';
+import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_turnos_screen.dart';
 
 import '../core/utils/custom_dialog.dart';
 import 'pacientes_screen.dart';
@@ -53,8 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (currentPage == 0) {
             Navigator.of(context).pushNamed('/createFichaClinica');
           }
+          if (currentPage == 1) {
+            Navigator.of(context).pushNamed('/createReserva');
+          }
           // TODO: Implementar la navegacion a la pantalla de Crear Paciente
-          // TODO: Implementar la navegacion a la pantalla de Crear Reserva
         },
         child: const Icon(Icons.add),
       ),
