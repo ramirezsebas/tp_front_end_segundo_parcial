@@ -27,8 +27,6 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
 
     final fichas = await fichaClinicaService.getFichasClinicas();
 
-    print(fichas);
-
     return fichas;
   }
 
