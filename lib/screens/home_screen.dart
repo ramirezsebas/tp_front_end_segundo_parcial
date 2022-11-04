@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/reserva_turnos_screen.dart';
 
-import '../core/utils/custom_dialog.dart';
 import 'pacientes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,12 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              showMyDialog(context, title: 'Deseas Cerrar Sesion?')
-                  .then((value) {
-                if (value != null && value) {
-                  Navigator.of(context).pushReplacementNamed('/login');
-                }
-              });
+              // OPen dialog asking for confirmation
+              // If confirmed, navigate to login screen
+              //   _showMyDialog().then((value) async {
+              //     if (value != null && value) {
+              //       AuthService authService = AuthService();
+              //       await authService.logout();
+
+              //       if (!mounted) {
+              //         return;
+              //       }
+
+              //       Navigator.of(context).pushReplacementNamed('/login');
+              //     }
+              //   });
             },
             icon: const Icon(Icons.logout),
           ),

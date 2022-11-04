@@ -20,6 +20,8 @@ class LoginScreen extends StatelessWidget {
                 Image.asset(
                   "assets/images/login.png",
                   fit: BoxFit.cover,
+                  height: 250,
+                  width: 250,
                 ),
                 const LoginForm(),
               ],
