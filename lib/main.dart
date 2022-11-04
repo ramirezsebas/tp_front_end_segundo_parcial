@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tp_front_end_segundo_parcial/screens/create_ficha_clinica_screen.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/home_screen.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/fichas_clinicas': (context) => const FichaClinicaScreen(),
         '/reserva_turnos': (context) => const ReservaTurnoScreen(),
         '/pacientes': (context) => const PacientesScreen(),
-        '/createFichaClinica': (context) => const CreateFichaClinicaScreen()
+        // '/createFichaClinica': (context) => const CreateFichaClinicaScreen()
       },
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
