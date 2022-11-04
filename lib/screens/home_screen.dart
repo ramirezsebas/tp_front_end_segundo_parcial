@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/reserva_turnos_screen.dart';
 
+import '../services/auth_service.dart';
 import 'pacientes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +19,31 @@ class _HomeScreenState extends State<HomeScreen> {
     const PacientesScreen(),
   ];
   int currentPage = 0;
+  Future<bool?> _showMyDialog() async {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Deseas Cerrar Sesion?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: const Text('Si'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // OPen dialog asking for confirmation
-              // If confirmed, navigate to login screen
-              //   _showMyDialog().then((value) async {
-              //     if (value != null && value) {
-              //       AuthService authService = AuthService();
-              //       await authService.logout();
+              _showMyDialog().then((value) async {
+                if (value != null && value) {
+                  AuthService authService = AuthService();
+                  await authService.logout();
 
-              //       if (!mounted) {
-              //         return;
-              //       }
+                  if (!mounted) {
+                    return;
+                  }
 
-              //       Navigator.of(context).pushReplacementNamed('/login');
-              //     }
-              //   });
+                  Navigator.of(context).pushReplacementNamed('/login');
+                }
+              });
             },
             icon: const Icon(Icons.logout),
           ),
