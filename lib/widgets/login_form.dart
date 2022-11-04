@@ -58,8 +58,12 @@ class _LoginFormState extends State<LoginForm> {
                   final isValidUser = await authService.login(
                       _usuarioController.text, _passwordController.text);
 
+                  if (!mounted) {
+                    return;
+                  }
+
                   if (isValidUser) {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
