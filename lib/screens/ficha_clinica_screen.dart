@@ -16,10 +16,12 @@ class FichaClinicaScreen extends StatefulWidget {
 }
 
 class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
+  Future<List<FichaClinicaModel>>? _futureFichasClinicas;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    getFichasClinicas();
+    _futureFichasClinicas = getFichasClinicas();
   }
 
   Future<List<FichaClinicaModel>> getFichasClinicas() async {
@@ -38,7 +40,14 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
         FichaClinicaService service = FichaClinicaService();
         bool isFichaEliminated = await service.deleteFichaClinica(id);
 
+        if (!mounted) {
+          return;
+        }
+
         if (isFichaEliminated) {
+          setState(() {
+            _futureFichasClinicas = getFichasClinicas();
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Ficha eliminada correctamente'),
@@ -65,7 +74,7 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<FichaClinicaModel>>(
-        future: getFichasClinicas(),
+        future: _futureFichasClinicas,
         initialData: const [],
         builder: (BuildContext context,
             AsyncSnapshot<List<FichaClinicaModel>> snapshot) {

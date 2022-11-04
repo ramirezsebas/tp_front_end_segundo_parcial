@@ -1,0 +1,14 @@
+{
+    "motivoConsulta": "dolor en la rodilla",
+    "diagnostico": "lesion leve, fisioterapia 10 sesiones",
+    "observacion": "nada grave",
+    "idEmpleado": {
+        "idPersona": 4
+    },
+    "idCliente": {
+        "idPersona": 6
+    },
+    "idTipoProducto": {
+        "idTipoProducto": 3
+    }
+}
