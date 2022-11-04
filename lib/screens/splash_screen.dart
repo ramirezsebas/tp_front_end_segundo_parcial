@@ -14,11 +14,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       if (box.read('token') == null) {
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
       } else {
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
       }
     });
   }
