@@ -21,13 +21,13 @@ class ReservaService {
     }
   }
 
-  Future<List<ReservaModel>> getAgenda(num? id) async {
-    String url = "https://equipoyosh.com/stock-nutrinatalia/persona/$id";
+  Future<List<ReservaModel>> getAgenda(num? id, String fecha) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/persona/$id/agenda?fecha=$fecha";
 
     final resp = await dio.get(url);
 
     if (resp.statusCode == 200) {
-      final respData = List.from(resp.data['lista']);
+      final respData = List.from(resp.data);
       final reservas =
       respData.map((e) => ReservaModel.fromJson(e)).toList();
       return reservas;

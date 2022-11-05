@@ -145,8 +145,12 @@ class _FilterAgendaWidget extends State<FilterAgendaWidget> {
                           ReservaService reservaService = ReservaService();
                           try {
                             final isValidUser = await reservaService
-                                .getAgenda(dropdownvalueEmpleados?.idPersona);
-                            print(dropdownvalueEmpleados);
+                                .getAgenda(dropdownvalueEmpleados?.idPersona, "113555");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                               SnackBar(
+                                content: Text(isValidUser.toString()),
+                              ),
+                            );
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -162,7 +166,7 @@ class _FilterAgendaWidget extends State<FilterAgendaWidget> {
                           );
                         }
                       },
-                      child:  Text('Obtener Horario $dropdownvalueEmpleados'),
+                      child:  Text("Obtener  horario"),
                     ),
                   ]))),
         ));

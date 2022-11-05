@@ -23,6 +23,7 @@ class ReservaTurnoScreen extends StatelessWidget {
                   fontFamily: "Lato",
                   fontWeight: FontWeight.bold,
                 ),),
+                leading: Icon(Icons.calendar_month_outlined),
               ),
             ),
              FilterReservaWidget(),

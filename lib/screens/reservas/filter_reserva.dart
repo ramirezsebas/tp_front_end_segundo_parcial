@@ -214,8 +214,10 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ReservaScreen()),
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(
                              SnackBar(content: Text('Cargando datos:${dropdownvalueClientes!}')),
                           );

@@ -8,18 +8,18 @@ import 'clinica_local_model.dart';
 ReservaModel fichaClinicaModelFromJson(String str) =>
     ReservaModel.fromJson(json.decode(str));
 
-String fichaClinicaModelToJson(ReservaModel data) =>
-    json.encode(data.toJson());
+String fichaClinicaModelToJson(ReservaModel data) => json.encode(data.toJson());
 
 class ReservaModel {
-  ReservaModel({
-    required this.idReserva,
-    required this.fecha,
-    required this.horaInicio,
-    required this.horaFin,
-    required this.idEmpleado,
-    required this.idCliente,
-  });
+  ReservaModel(
+      {required this.idReserva,
+      required this.fecha,
+      required this.horaInicio,
+      required this.horaFin,
+      required this.idEmpleado,
+      required this.idCliente,
+      required this.horaFinCadena,
+      required this.horaInicioCadena});
 
   final int? idReserva;
   final DateTime? fecha;
@@ -27,13 +27,12 @@ class ReservaModel {
   final String? horaFin;
   final PersonaModel? idEmpleado;
   final PersonaModel? idCliente;
+  final String horaInicioCadena;
+  final String horaFinCadena;
 
-  factory ReservaModel.fromJson(Map<String, dynamic> json) =>
-      ReservaModel(
+  factory ReservaModel.fromJson(Map<String, dynamic> json) => ReservaModel(
         idReserva: json["idReserva"],
-        fecha: json["fecha"] == null
-            ? null
-            : DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null ? null : DateTime.parse(json["fecha"]),
         horaInicio: json["horaInicio"],
         horaFin: json["horaFin"],
         idEmpleado: json["idEmpleado"] == null
@@ -42,6 +41,8 @@ class ReservaModel {
         idCliente: json["idCliente"] == null
             ? null
             : PersonaModel.fromJson(json["idCliente"]),
+        horaInicioCadena: json["horaInicioCadena"],
+        horaFinCadena: json["horaFinCadena"],
       );
 
   Map<String, dynamic> toJson() => {
