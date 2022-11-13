@@ -4,19 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_screen.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:intl/intl.dart';
+import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_turnos_screen.dart';
 
 import '../../models/persona_model.dart';
 import '../../services/persona_service.dart';
 
 class FilterReservaWidget extends StatefulWidget {
+  late String json;
   @override
   State<StatefulWidget> createState() => _FilterReservaWidget();
 }
 
 class _FilterReservaWidget extends State<FilterReservaWidget> {
   final _formKey = GlobalKey<FormState>();
-  String? dropdownvalueEmpleados;
-  String? dropdownvalueClientes;
+  PersonaModel? dropdownvalueEmpleados;
+  PersonaModel? dropdownvalueClientes;
   TextEditingController dateInit = TextEditingController();
   TextEditingController dateEnd = TextEditingController();
 
@@ -49,8 +51,9 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
           child: Container(
             height: 250,
             decoration: BoxDecoration(
-                color: const Color.fromRGBO(0, 0, 0, 0.05),
-                borderRadius: BorderRadius.circular(10.0)),
+                color: const Color.fromRGBO(1, 2, 3, .1),
+                borderRadius: BorderRadius.circular(15.0)),
+
             child:Padding(
               padding: const EdgeInsets.all(10),
               child: Form(
@@ -73,14 +76,15 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                                       const Text(
                                         "Empleado:   ",
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "NEXA",
+                                          fontWeight: FontWeight.normal,
                                         ),
                                       ),
                                       DropdownButton(
                                         hint: const Text('Empleados...'),
                                         items: data.map((item) {
                                           return DropdownMenuItem(
-                                            value: item.idPersona.toString(),
+                                            value: item,
                                             child: Text(item.nombre.toString()),
                                           );
                                         }).toList(),
@@ -98,6 +102,7 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                                 }
                               },
                             ),
+
                             FutureBuilder<List<PersonaModel>>(
                               future: getPersonas(),
                               builder: (context, snapshot) {
@@ -109,14 +114,15 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                                       const Text(
                                         "Cliente:   ",
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "NEXA",
+                                          fontWeight: FontWeight.normal,
                                         ),
                                       ),
                                       DropdownButton(
                                         hint: const Text('Clientes...'),
                                         items: data.map((item) {
                                           return DropdownMenuItem(
-                                            value: item.toString(),
+                                            value: item,
                                             child: Text(item.nombre.toString()),
                                           );
                                         }).toList(),
@@ -214,16 +220,36 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ReservaScreen()),
-                          );
+                          String values="";
+
+                          if(dropdownvalueEmpleados != null){
+                            values= '"idEmpleado":{"idPersona" : ${dropdownvalueEmpleados?.idPersona}},';
+                          }
+                          if(dropdownvalueClientes != null){
+                           values= '$values "idCliente":{"idPersona" : ${dropdownvalueClientes?.idPersona}},';
+                          }
+                          if(dateInit.text != ''){
+                            List digit= dateInit.text.split("-");
+                            values = '$values "fechaDesdeCadena":"${digit[0]}${digit[1]}${digit[2]}",';
+                          }
+                          if(dateEnd.text != ''){
+                            List digit= dateEnd.text.split("-");
+                            values = '$values "fechaHastaCadena":"${digit[0]}${digit[1]}${digit[2]}"';
+                          }
+                          values='{$values}';
+                          print(values);
+                          var valuesEncode = Uri.encodeFull(values);
+                          widget.json=valuesEncode;
                           ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(content: Text('Cargando datos:${dropdownvalueClientes!}')),
+                             SnackBar(content: Text('Cargando datos:$valuesEncode')),
                           );
                         }
                       },
-                      child: const Text('Filtrar'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: Colors.blue,
+
+                      ),
+                      child: const Text('Filtrar', style: TextStyle(fontSize: 20),),
                     ),
                   ])),
             ),

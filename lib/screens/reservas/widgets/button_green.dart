@@ -31,7 +31,7 @@ class _ButtonGreen extends State<ButtonGreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           gradient: const LinearGradient(
-              colors: [Color(0xFFA7FF84), Color(0xFF1CBB78)],
+              colors: [Colors.red, Colors.redAccent],
               begin: FractionalOffset(0.2, 0.0),
               end: FractionalOffset(1.0, 0.6),
               stops: [0.0, 0.6],

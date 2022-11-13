@@ -20,6 +20,20 @@ class ReservaService {
       throw ServerException(message: 'Failed to load data');
     }
   }
+  Future<List<ReservaModel>> getReservasFilter(String jsonFilter) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/reserva?ejemplo=$jsonFilter";
+
+    final resp = await dio.get(url);
+
+    if (resp.statusCode == 200) {
+      final respData = List.from(resp.data['lista']);
+      final reservas =
+      respData.map((e) => ReservaModel.fromJson(e)).toList();
+      return reservas;
+    } else {
+      throw ServerException(message: 'Failed to load data');
+    }
+  }
 
   Future<List<ReservaModel>> getAgenda(num? id, String fecha) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/persona/$id/agenda?fecha=$fecha";

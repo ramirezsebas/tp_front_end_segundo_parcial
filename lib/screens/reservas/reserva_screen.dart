@@ -11,28 +11,36 @@ import '../../widgets/card_text.dart';
 import 'widgets/custom_card_reserva.dart';
 
 class ReservaScreen extends StatefulWidget {
-  const ReservaScreen({Key? key}) : super(key: key);
+  ReservaScreen({Key? key,
+    required this.json}) : super(key: key);
+  String json;
 
   @override
   State<ReservaScreen> createState() => _ReservaScreenState();
 }
 
 class _ReservaScreenState extends State<ReservaScreen> {
+  late Future<List<ReservaModel>> currentReservas;
+  ReservaService reservaService = ReservaService();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    getReservas();
+    // currentReservas=reservaService.getReservas();
   }
 
-  Future<List<ReservaModel>> getReservas() async {
-    ReservaService reservaService = ReservaService();
-
-    final reservas = await reservaService.getReservas();
-
-    print(reservas);
-
-    return reservas;
+  @override
+  void initState() {
+    super.initState();
+    // Clientes = personaService.getPersonas();
+    if(widget.json=="") {
+      print(widget.json);
+      currentReservas = reservaService.getReservas();
+    }else{
+      print("entro aca");
+      currentReservas = reservaService.getReservasFilter(widget.json);
+    }
   }
+
 
   deleteReserva(int id) async {
     try {
@@ -65,6 +73,7 @@ class _ReservaScreenState extends State<ReservaScreen> {
     }
   }
 
+
   final description = Container(
     margin: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
     child: const Text(
@@ -87,14 +96,14 @@ class _ReservaScreenState extends State<ReservaScreen> {
             child:Padding(
               padding: const EdgeInsets.all(10),
               child: FutureBuilder<List<ReservaModel>>(
-                future: getReservas(),
+                future: currentReservas,
                 initialData: const [],
                 builder: (BuildContext context, AsyncSnapshot<List<ReservaModel>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       final reservas = snapshot.data!;
                       return RefreshIndicator(
-                        onRefresh: () => getReservas(),
+                        onRefresh: () => currentReservas,
                         child: ListView.builder(
                           itemCount: reservas.length,
                           padding: const EdgeInsets.all(8),

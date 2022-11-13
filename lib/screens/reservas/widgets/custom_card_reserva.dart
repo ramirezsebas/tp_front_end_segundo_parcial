@@ -19,138 +19,147 @@ class CustomCardReserva extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.grey,
-      shadowColor: Colors.black,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-        side: const BorderSide(color: Colors.transparent, width: 1),
-      ),
-      // Container(
-      //   height: 200.0,
-      //   alignment: const Alignment(-1,-1),
-      //   child:  Text(idReserva,
-      //     style: const TextStyle(
-      //       color: Colors.white,
-      //       fontSize: 15.0,
-      //       fontFamily: "Tamil Sangam MN",
-      //     ),
-      //   ),
-      // ),
-      child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          Text("Empleado:  "),
-                          Text(Empleado,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontFamily: "Tamil Sangam MN",)
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text("Fecha:  "),
-                          Text(fecha,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontFamily: "Tamil Sangam MN",)
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+    List<bool> _selections = List.generate(2, (_)=>false );
 
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Cliente:  "),
-                          Text(Cliente,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontFamily: "Tamil Sangam MN",)
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text("Horario:  "),
-                          Row(
-                            children: [
-                              Text("$horaInicio - ",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontFamily: "Tamil Sangam MN",)
-                              ),
-                              Text("$horaFin",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontFamily: "Tamil Sangam MN",)
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-
-                ],
+    return Column(
+      children: [
+            Card(
+              color: Colors.white,
+              shadowColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                side: const BorderSide(color: Colors.transparent, width: 1),
               ),
-            ],
-          )
-      ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                // ToggleButtons(
+                                //   isSelected:_selections,
+                                //   color:Colors.teal,
+                                //   fillColor:Colors.deepPurple,
+                                //   children: const <Widget>[
+                                //     Icon(Icons.check_box),
+                                //     Icon(Icons.check_box_outline_blank),
+                                //   ],
+                                // ),
+                                Column(
+                                  children: [
+                                    Text("Empleado:  "),
+                                    Text(Empleado,
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontFamily: "NEXA",)
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Fecha:  "),
+                                    Text(fecha,
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontFamily: "NEXA",)
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
 
+                            Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text("Cliente:  "),
+                                    Text(Cliente,
+                                        style: const TextStyle(
+
+                                          fontSize: 15.0,
+                                          fontFamily: "NEXA",)
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Horario:  "),
+                                    Row(
+                                      children: [
+                                        Text("$horaInicio - ",
+                                            style: const TextStyle(
+
+                                              fontSize: 15.0,
+                                              fontFamily: "NEXA",)
+                                        ),
+                                        Text("$horaFin",
+                                            style: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontFamily: "NEXA",)
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        ButtonGreen(text: "X", onPressed: ()=>{}, height:20, width: 20),
+                      ],
+                    )
+                  ),
+                  formObservacion(),
+                ],
+              )
+            ),
+      ],
     );
   }
 
   Widget formObservacion() {
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Enter your email',
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate will return true if the form is valid, or false if
-                // the form is invalid.
-                if (_formKey.currentState!.validate()) {
-                  // Process data.
+      child: Expanded(
+        child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Observacion',
+              ),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'campo requerido';
                 }
+                return null;
               },
-              child: const Text('Submit'),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Validate will return true if the form is valid, or false if
+                  // the form is invalid.
+                  if (_formKey.currentState!.validate()) {
+                    // Process data.
+                  }
+                },
+                child: const Text('Enviar'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+
 }
