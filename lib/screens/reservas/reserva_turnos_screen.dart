@@ -3,8 +3,7 @@ import 'package:tp_front_end_segundo_parcial/screens/reservas/filter_reserva.dar
 import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_screen.dart';
 
 class ReservaTurnoScreen extends StatelessWidget {
-  const ReservaTurnoScreen({Key? key, required this.json}) : super(key: key);
-  final String json;
+  const ReservaTurnoScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var screenWidht = MediaQuery.of(context).size.width;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_turnos_screen.dart';
-import 'package:tp_front_end_segundo_parcial/screens/reserva_turnos_screen.dart';
 import 'package:tp_front_end_segundo_parcial/services/tipo_producto_service.dart';
 
 import '../models/ficha_clinica_model.dart';
