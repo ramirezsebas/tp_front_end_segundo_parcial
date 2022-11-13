@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _pages = [
     const FichaClinicaScreen(),
-    const ReservaTurnoScreen(),
+     ReservaTurnoScreen(),
     const PacientesScreen(),
   ];
   int currentPage = 0;

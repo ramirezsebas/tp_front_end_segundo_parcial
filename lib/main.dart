@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
         '/fichas_clinicas': (context) => const FichaClinicaScreen(),
-        '/reserva_turnos': (context) => const ReservaTurnoScreen(),
+        '/reserva_turnos': (context) =>  ReservaTurnoScreen(),
         '/pacientes': (context) => const PacientesScreen(),
         // '/createFichaClinica': (context) => const CreateFichaClinicaScreen()
         '/createReserva': (context)=>  CreateReservaScreen(),
