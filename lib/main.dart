@@ -4,8 +4,9 @@ import 'package:tp_front_end_segundo_parcial/screens/ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/home_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/login_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/pacientes_screen.dart';
-import 'package:tp_front_end_segundo_parcial/screens/reserva_turnos_screen.dart';
 import 'package:tp_front_end_segundo_parcial/screens/splash_screen.dart';
+import 'package:tp_front_end_segundo_parcial/screens/reservas/create_reserva_screen.dart';
+import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_turnos_screen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/reserva_turnos': (context) => const ReservaTurnoScreen(),
         '/pacientes': (context) => const PacientesScreen(),
         // '/createFichaClinica': (context) => const CreateFichaClinicaScreen()
+        '/createReserva': (context)=>  CreateReservaScreen(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
