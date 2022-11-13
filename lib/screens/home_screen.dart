@@ -54,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.of(context).pushNamed('/createFichaClinica');
           }
           // TODO: Implementar la navegacion a la pantalla de Crear Paciente
+          if (currentPage == 2) {
+            Navigator.of(context).pushNamed('/createPaciente');
+          }
           // TODO: Implementar la navegacion a la pantalla de Crear Reserva
         },
         child: const Icon(Icons.add),
