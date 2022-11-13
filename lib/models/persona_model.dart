@@ -16,12 +16,23 @@ class PersonaModel {
     required this.apellido,
     required this.telefono,
     required this.email,
+    required this.usuarioLogin,
     required this.ruc,
     required this.cedula,
     required this.tipoPersona,
     required this.fechaNacimiento,
   });
 
+  final num? idPersona;
+  final String? nombre;
+  final String? usuarioLogin;
+  final String? apellido;
+  final String? email;
+  final String? telefono;
+  final String? ruc;
+  final String? cedula;
+  final String? tipoPersona;
+  final DateTime? fechaNacimiento;
   PersonaModel.defaultConst() {
     nombre = "";
     apellido = "";
@@ -47,6 +58,7 @@ class PersonaModel {
   factory PersonaModel.fromJson(Map<String, dynamic> json) => PersonaModel(
         idPersona: json["idPersona"],
         nombre: json["nombre"],
+        usuarioLogin: json["usuarioLogin"],
         apellido: json["apellido"],
         email: json["email"],
         telefono: json["telefono"],
@@ -61,6 +73,7 @@ class PersonaModel {
   Map<String, dynamic> toJson() => {
         "idPersona": idPersona,
         "nombre": nombre,
+        "usuarioLogin": usuarioLogin,
         "apellido": apellido,
         "email": email,
         "telefono": telefono,
