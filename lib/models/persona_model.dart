@@ -4,15 +4,13 @@
 
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
-
 PersonaModel personaModelFromJson(String str) =>
     PersonaModel.fromJson(json.decode(str));
 
 String personaModelToJson(PersonaModel data) => json.encode(data.toJson());
 
-class PersonaModel extends Equatable {
-  const PersonaModel({
+class PersonaModel {
+  PersonaModel({
     required this.idPersona,
     required this.nombre,
     required this.apellido,
@@ -35,6 +33,27 @@ class PersonaModel extends Equatable {
   final String? cedula;
   final String? tipoPersona;
   final DateTime? fechaNacimiento;
+  PersonaModel.defaultConst() {
+    nombre = "";
+    apellido = "";
+    email = "";
+    telefono = "";
+    ruc = "";
+    cedula = "";
+    tipoPersona = "";
+    cedula = "";
+    fechaNacimiento = DateTime.now();
+  }
+
+  int? idPersona;
+  String? nombre;
+  String? apellido;
+  String? email;
+  String? telefono;
+  String? ruc;
+  String? cedula;
+  String? tipoPersona;
+  DateTime? fechaNacimiento;
 
   factory PersonaModel.fromJson(Map<String, dynamic> json) => PersonaModel(
         idPersona: json["idPersona"],
@@ -63,7 +82,7 @@ class PersonaModel extends Equatable {
         "tipoPersona": tipoPersona,
         "fechaNacimiento": fechaNacimiento == null
             ? null
-            : "${fechaNacimiento!.year.toString().padLeft(4, '0')}-${fechaNacimiento!.month.toString().padLeft(2, '0')}-${fechaNacimiento!.day.toString().padLeft(2, '0')}",
+            : "${fechaNacimiento!.year.toString().padLeft(4, '0')}-${fechaNacimiento!.month.toString().padLeft(2, '0')}-${fechaNacimiento!.day.toString().padLeft(2, '0')} 00:00:00",
       };
 
   @override

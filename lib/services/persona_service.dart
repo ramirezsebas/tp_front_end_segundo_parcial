@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tp_front_end_segundo_parcial/core/errors/server_exception.dart';
 import 'package:tp_front_end_segundo_parcial/models/persona_model.dart';
 
@@ -38,12 +39,32 @@ class PersonaService {
   Future<String> createPersona(PersonaModel persona) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/persona";
 
-    final resp = await dio.post(url, data: persona.toJson());
+    if (kDebugMode) {
+      print(persona.toJson());
+    }
 
-    if (resp.statusCode == 200) {
-      return resp.data;
-    } else {
-      throw ServerException(message: 'Failed to load data');
+    try {
+      final resp = await dio.post(url,
+          data: persona.toJson(),
+          options: Options(
+              followRedirects: false,
+              validateStatus: (status) {
+                if (status != null && (status ~/ 100) == 2) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }));
+      if (resp.statusCode != null && (resp.statusCode! ~/ 100) == 2) {
+        return "Persona creada correctamente!";
+      } else {
+        return "No se pudo crear la persona";
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return "Error al crear la persona";
     }
   }
 
@@ -54,6 +75,18 @@ class PersonaService {
 
     if (resp.statusCode == 200) {
       return resp.data;
+    } else {
+      throw ServerException(message: 'Failed to load data');
+    }
+  }
+
+  Future<bool> deletePersona(int id) async {
+    String url = "https://equipoyosh.com/stock-nutrinatalia/persona/$id";
+
+    final resp = await dio.delete(url);
+
+    if (resp.statusCode == 200) {
+      return true;
     } else {
       throw ServerException(message: 'Failed to load data');
     }

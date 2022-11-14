@@ -42,6 +42,9 @@ dependencies:
   select_form_field: "^2.2.0"
   intl: ^0.17.0
   basic_utils: ^5.4.0
+  datetime_picker_formfield: ^2.0.1
+  email_validator: ^2.1.17
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:
