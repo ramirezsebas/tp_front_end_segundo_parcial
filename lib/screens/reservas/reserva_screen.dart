@@ -12,33 +12,29 @@ import 'widgets/custom_card_reserva.dart';
 
 class ReservaScreen extends StatefulWidget {
   ReservaScreen({Key? key,
-    required this.json}) : super(key: key);
+    required this.json, required this.lista}) : super(key: key);
   String json;
+  Future<List<ReservaModel>> lista;
 
   @override
   State<ReservaScreen> createState() => _ReservaScreenState();
 }
 
 class _ReservaScreenState extends State<ReservaScreen> {
-  late Future<List<ReservaModel>> currentReservas;
+  // late Future<List<ReservaModel>> currentReservas;
   ReservaService reservaService = ReservaService();
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // currentReservas=reservaService.getReservas();
-  }
 
   @override
   void initState() {
     super.initState();
     // Clientes = personaService.getPersonas();
-    if(widget.json=="") {
-      print(widget.json);
-      currentReservas = reservaService.getReservas();
-    }else{
-      print("entro aca");
-      currentReservas = reservaService.getReservasFilter(widget.json);
-    }
+    // if(widget.json=="") {
+    //   print(widget.json);
+    //   currentReservas = reservaService.getReservas();
+    // }else{
+    //   print("entro aca");
+    //   currentReservas = reservaService.getReservasFilter(widget.json);
+    // }
   }
 
 
@@ -96,14 +92,14 @@ class _ReservaScreenState extends State<ReservaScreen> {
             child:Padding(
               padding: const EdgeInsets.all(10),
               child: FutureBuilder<List<ReservaModel>>(
-                future: currentReservas,
+                future: widget.lista,
                 initialData: const [],
                 builder: (BuildContext context, AsyncSnapshot<List<ReservaModel>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       final reservas = snapshot.data!;
                       return RefreshIndicator(
-                        onRefresh: () => currentReservas,
+                        onRefresh: () => widget.lista,
                         child: ListView.builder(
                           itemCount: reservas.length,
                           padding: const EdgeInsets.all(8),

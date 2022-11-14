@@ -5,22 +5,26 @@ import 'package:tp_front_end_segundo_parcial/models/tipo_producto_model.dart';
 
 import '../services/ficha_clinica_service.dart';
 
-class CreateFichaClinicaScreen extends StatefulWidget {
+class UpdateFichaClinicaScreen extends StatefulWidget {
   final List<PersonaModel> personas;
+  final String idFichaClinica;
   final List<TipoProductoModel> tiposProductos;
+  final FichaClinicaDto fichaClinica;
 
-  const CreateFichaClinicaScreen({
+  const UpdateFichaClinicaScreen({
     Key? key,
     required this.personas,
+    required this.idFichaClinica,
     required this.tiposProductos,
+    required this.fichaClinica,
   }) : super(key: key);
 
   @override
-  State<CreateFichaClinicaScreen> createState() =>
-      _CreateFichaClinicaScreenState();
+  State<UpdateFichaClinicaScreen> createState() =>
+      _UpdateFichaClinicaScreenState();
 }
 
-class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
+class _UpdateFichaClinicaScreenState extends State<UpdateFichaClinicaScreen> {
   String selectedCliente = "";
   String selectedEmpleado = "";
   String selectedTipoProducto = "";
@@ -28,19 +32,49 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
   String diagnostico = "";
   String observaciones = "";
 
+  updateFichaClinica(String idFichaClinica) async {
+    final fichaClinicaService = FichaClinicaService();
+    final fichaClinicaDto = FichaClinicaDto(
+      motivoConsulta: motivoConsulta,
+      diagnostico: diagnostico,
+      observacion: observaciones,
+      idEmpleado: selectedEmpleado,
+      idCliente: selectedCliente,
+      idTipoProducto: selectedTipoProducto,
+    );
+    try {
+      await fichaClinicaService.updateFichaClinica(
+          idFichaClinica, fichaClinicaDto);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Se creo correectamente"),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error al crear"),
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    selectedCliente = widget.personas.first.nombre ?? "";
-    selectedEmpleado = widget.personas.first.nombre ?? "";
-    selectedTipoProducto = widget.tiposProductos.first.descripcion ?? "";
+    selectedCliente = widget.fichaClinica.idCliente;
+    selectedEmpleado = widget.fichaClinica.idEmpleado;
+    selectedTipoProducto = widget.fichaClinica.idTipoProducto;
+    motivoConsulta = widget.fichaClinica.motivoConsulta;
+    diagnostico = widget.fichaClinica.diagnostico;
+    observaciones = widget.fichaClinica.observacion;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Crear Ficha Clínica"),
+        title: const Text("Actualizar Ficha Clínica"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -54,10 +88,11 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
             idTipoProducto: selectedTipoProducto,
           );
           try {
-            await fichaClinicaService.createFichaClinica(fichaClinicaDto);
+            await fichaClinicaService.updateFichaClinica(
+                widget.idFichaClinica, fichaClinicaDto);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Se creo correectamente"),
+                content: Text("Se actualizo correectamente"),
               ),
             );
 
@@ -66,12 +101,12 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
             print(e);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Error al crear la ficha clínica"),
+                content: Text("Error al actualizar la ficha clínica"),
               ),
             );
           }
         },
-        child: const Icon(Icons.save),
+        child: const Icon(Icons.update),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -81,6 +116,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               const Text("Datos del Paciente"),
               const SizedBox(height: 20),
               TextFormField(
+                initialValue: widget.fichaClinica.motivoConsulta,
                 onChanged: (value) {
                   motivoConsulta = value;
                 },
@@ -91,6 +127,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                initialValue: widget.fichaClinica.diagnostico,
                 onChanged: (value) {
                   diagnostico = value;
                 },
@@ -101,6 +138,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                initialValue: widget.fichaClinica.observacion,
                 onChanged: (value) {
                   observaciones = value;
                 },
@@ -111,6 +149,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField(
+                // value: widget.fichaClinica.idEmpleado,
                 hint: const Text("Seleccione un empleado"),
                 items: widget.personas
                     .map(
@@ -128,6 +167,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField(
+                // value: widget.fichaClinica.idCliente,
                 hint: const Text("Seleccione un cliente"),
                 items: widget.personas
                     .map(
@@ -145,6 +185,7 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField(
+                // value: widget.fichaClinica.idTipoProducto,
                 hint: const Text("Seleccione un tipo de producto"),
                 items: widget.tiposProductos
                     .map(

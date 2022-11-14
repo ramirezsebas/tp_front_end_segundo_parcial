@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tp_front_end_segundo_parcial/core/errors/server_exception.dart';
 import 'package:tp_front_end_segundo_parcial/models/persona_model.dart';
 
@@ -42,11 +43,14 @@ class PersonaService {
     if (kDebugMode) {
       print(persona.toJson());
     }
-
+    final usuario = GetStorage().read('token');
     try {
       final resp = await dio.post(url,
           data: persona.toJson(),
           options: Options(
+              headers: {
+                "usuario": usuario,
+              },
               followRedirects: false,
               validateStatus: (status) {
                 if (status != null && (status ~/ 100) == 2) {

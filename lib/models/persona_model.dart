@@ -23,6 +23,17 @@ class PersonaModel {
     required this.fechaNacimiento,
   });
 
+  int? idPersona;
+  String? nombre;
+  String? usuarioLogin;
+  String? apellido;
+  String? email;
+  String? telefono;
+  String? ruc;
+  String? cedula;
+  String? tipoPersona;
+  DateTime? fechaNacimiento;
+
   PersonaModel.defaultConst() {
     nombre = "";
     apellido = "";
@@ -34,17 +45,6 @@ class PersonaModel {
     cedula = "";
     fechaNacimiento = DateTime.now();
   }
-
-  int? idPersona;
-  String? nombre;
-  String? usuarioLogin;
-  String? apellido;
-  String? email;
-  String? telefono;
-  String? ruc;
-  String? cedula;
-  String? tipoPersona;
-  DateTime? fechaNacimiento;
 
   factory PersonaModel.fromJson(Map<String, dynamic> json) => PersonaModel(
         idPersona: json["idPersona"],

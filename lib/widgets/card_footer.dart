@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
-
 class CardFooter extends StatelessWidget {
   const CardFooter({
     Key? key,
     required this.onDelete,
+    this.onEdit,
   }) : super(key: key);
 
   final VoidCallback onDelete;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ElevatedButton.icon(
-          onPressed: () {},
-          icon: const Icon(Icons.update_outlined),
-          label: const Text("Actualizar"),
-        ),
+        if (onEdit != null)
+          ElevatedButton.icon(
+            onPressed: onEdit,
+            icon: const Icon(Icons.update_outlined),
+            label: const Text("Actualizar"),
+          ),
         const Spacer(),
         ElevatedButton.icon(
           onPressed: onDelete,

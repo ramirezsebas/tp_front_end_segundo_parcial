@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tp_front_end_segundo_parcial/models/reserva_dto.dart';
 import 'package:tp_front_end_segundo_parcial/screens/reservas/reserva_screen.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,10 @@ import '../../models/persona_model.dart';
 import '../../services/persona_service.dart';
 
 class FilterReservaWidget extends StatefulWidget {
-  late String json;
+  FilterReservaWidget({super.key, required this.onFilter,required this.setLista});
+
+  Function(String value) onFilter;
+  Function(ReservaDto value) setLista;
   @override
   State<StatefulWidget> createState() => _FilterReservaWidget();
 }
@@ -222,24 +226,34 @@ class _FilterReservaWidget extends State<FilterReservaWidget> {
                         if (_formKey.currentState!.validate()) {
                           String values="";
 
+
                           if(dropdownvalueEmpleados != null){
-                            values= '"idEmpleado":{"idPersona" : ${dropdownvalueEmpleados?.idPersona}},';
+                            values= '"idEmpleado":{"idPersona" : ${dropdownvalueEmpleados?.idPersona}}';
                           }
                           if(dropdownvalueClientes != null){
-                           values= '$values "idCliente":{"idPersona" : ${dropdownvalueClientes?.idPersona}},';
+                           values= '$values "idCliente":{"idPersona" : ${dropdownvalueClientes?.idPersona}}';
                           }
+                          String? init;
                           if(dateInit.text != ''){
                             List digit= dateInit.text.split("-");
-                            values = '$values "fechaDesdeCadena":"${digit[0]}${digit[1]}${digit[2]}",';
+                            init = "${digit[0]}${digit[1]}${digit[2]}";
                           }
+                          String? end;
                           if(dateEnd.text != ''){
                             List digit= dateEnd.text.split("-");
-                            values = '$values "fechaHastaCadena":"${digit[0]}${digit[1]}${digit[2]}"';
+                            end = "${digit[0]}${digit[1]}${digit[2]}";
                           }
+
+                          ReservaDto dto= ReservaDto(
+                              idEmpleado: dropdownvalueEmpleados?.idPersona.toString(),
+                              idCliente: dropdownvalueClientes?.idPersona.toString(),
+                              fechaDesdeCadena:init,
+                              fechaHastaCadena: end,
+                          );
                           values='{$values}';
-                          print(values);
                           var valuesEncode = Uri.encodeFull(values);
-                          widget.json=valuesEncode;
+                          widget.onFilter(valuesEncode);
+                          widget.setLista(dto);
                           ScaffoldMessenger.of(context).showSnackBar(
                              SnackBar(content: Text('Cargando datos:$valuesEncode')),
                           );

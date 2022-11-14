@@ -18,11 +18,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _pages = [
-    const FichaClinicaScreen(),
-    const ReservaTurnoScreen(),
-    const PacientesScreen(),
-  ];
+  Future<List<FichaClinicaModel>>? _futureFichasClinicas;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _futureFichasClinicas = getFichasClinicas();
+    _pages = [
+      FichaClinicaScreen(
+        futureFichasClinica: _futureFichasClinicas,
+      ),
+      ReservaTurnoScreen(),
+      const PacientesScreen(),
+    ];
+  }
+
+  List<Widget> _pages = [];
   int currentPage = 0;
   Future<bool?> _showMyDialog() async {
     return showDialog<bool>(
@@ -101,12 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
             final personas = await personaService.getPersonas();
             final tiposProductos = await tipoProductoService.getTipoProductos();
-            Navigator.of(context).push(
+            await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => CreateFichaClinicaScreen(
                     personas: personas, tiposProductos: tiposProductos),
               ),
             );
+            setState(() {
+              _futureFichasClinicas = getFichasClinicas();
+            });
           }
           if (currentPage == 1) {
             Navigator.of(context).pushNamed('/createReserva');

@@ -1,15 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_front_end_segundo_parcial/screens/update_ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/services/ficha_clinica_service.dart';
 import 'package:tp_front_end_segundo_parcial/widgets/custom_card.dart';
 
 import '../core/utils/custom_dialog.dart';
 import '../models/ficha_clinica_model.dart';
+import '../services/persona_service.dart';
+import '../services/tipo_producto_service.dart';
 import '../widgets/card_footer.dart';
 import '../widgets/card_text.dart';
 
 class FichaClinicaScreen extends StatefulWidget {
-  const FichaClinicaScreen({Key? key}) : super(key: key);
+  final Future<List<FichaClinicaModel>>? futureFichasClinica;
+  const FichaClinicaScreen({
+    Key? key,
+    this.futureFichasClinica,
+  }) : super(key: key);
 
   @override
   State<FichaClinicaScreen> createState() => _FichaClinicaScreenState();
@@ -21,7 +28,7 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _futureFichasClinicas = getFichasClinicas();
+    _futureFichasClinicas = widget.futureFichasClinica ?? getFichasClinicas();
   }
 
   Future<List<FichaClinicaModel>> getFichasClinicas() async {
@@ -128,6 +135,39 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
                                 "Nombre del Cliente identificado",
                           ),
                           CardFooter(
+                            onEdit: () async {
+                              final PersonaService personaService =
+                                  PersonaService();
+                              final TipoProductoService tipoProductoService =
+                                  TipoProductoService();
+
+                              final personas =
+                                  await personaService.getPersonas();
+                              final tiposProductos =
+                                  await tipoProductoService.getTipoProductos();
+
+                              if (!mounted) {
+                                return;
+                              }
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      UpdateFichaClinicaScreen(
+                                    idFichaClinica:
+                                        currentFicha.idFichaClinica.toString(),
+                                    fichaClinica:
+                                        currentFicha.toFichaClinicaDto(),
+                                    personas: personas,
+                                    tiposProductos: tiposProductos,
+                                  ),
+                                ),
+                              );
+
+                              setState(() {
+                                _futureFichasClinicas = getFichasClinicas();
+                              });
+                            },
                             onDelete: () => deleteFichaClinica(
                               currentFicha.idFichaClinica!,
                             ),
