@@ -67,6 +67,15 @@ class _PacientesScreenState extends State<PacientesScreen> {
 
   Future<List<PersonaModel>> getPacientesFiltrado() async {
     var tmp = await getPacientes();
+    if (kDebugMode) {
+      print("entra en el filtro");
+      print("nombre: $nombreSearch");
+      print("apellido: $apellidoSearch");
+      print("initialValueCurrentNombre: $initialValueCurrentNombre");
+      print("initialValueCurrentApellido: $initialValueCurrentApellido");
+      print("tmp incial: $tmp");
+    }
+
     if (nombreSearch != "") {
       tmp = tmp
           .where((element) => element.nombre!
@@ -82,6 +91,9 @@ class _PacientesScreenState extends State<PacientesScreen> {
                   .contains(apellidoSearch.toLowerCase())
               : false)
           .toList();
+    }
+    if (kDebugMode) {
+      print("tmp final: $tmp");
     }
     return tmp;
   }
@@ -125,7 +137,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
     return Scaffold(
       body: FutureBuilder<List<PersonaModel>>(
           future: listapacientes,
-          initialData: const [],
+          //initialData: const [],
           builder: (BuildContext context,
               AsyncSnapshot<List<PersonaModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -137,6 +149,8 @@ class _PacientesScreenState extends State<PacientesScreen> {
                     setState(() {
                       listapacientes = getPacientes();
                     });
+                    nombreSearch = "";
+                    apellidoSearch = "";
                     initialValueCurrentNombre = null;
                     initialValueCurrentApellido = null;
                     return Future.value(true);
