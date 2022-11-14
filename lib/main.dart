@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         '/pacientes': (context) => const PacientesScreen(),
         // '/createFichaClinica': (context) => const CreateFichaClinicaScreen()
         '/createReserva': (context) => CreateReservaScreen(),
-        '/createFichaClinica': (context) => const CreateFichaClinicaScreen(),
         '/createPaciente': (context) => const CreatePacienteScreen()
       },
       debugShowCheckedModeBanner: false,

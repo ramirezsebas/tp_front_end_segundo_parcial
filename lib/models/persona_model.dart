@@ -23,16 +23,6 @@ class PersonaModel {
     required this.fechaNacimiento,
   });
 
-  final num? idPersona;
-  final String? nombre;
-  final String? usuarioLogin;
-  final String? apellido;
-  final String? email;
-  final String? telefono;
-  final String? ruc;
-  final String? cedula;
-  final String? tipoPersona;
-  final DateTime? fechaNacimiento;
   PersonaModel.defaultConst() {
     nombre = "";
     apellido = "";
@@ -47,6 +37,7 @@ class PersonaModel {
 
   int? idPersona;
   String? nombre;
+  String? usuarioLogin;
   String? apellido;
   String? email;
   String? telefono;
