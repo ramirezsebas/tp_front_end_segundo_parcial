@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tp_front_end_segundo_parcial/models/ficha_clinica_dto.dart';
 import 'package:tp_front_end_segundo_parcial/models/ficha_clinica_model.dart';
 
@@ -48,8 +49,18 @@ class FichaClinicaService {
 
   Future<bool> createFichaClinica(FichaClinicaDto fichaClinica) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/fichaClinica";
-
-    final resp = await dio.post(url, data: fichaClinica.toJson());
+    print(fichaClinica.toJson());
+    final usuario = GetStorage().read('token');
+    final resp = await dio.post(
+      url,
+      data: fichaClinica.toJson(),
+      options: Options(
+        contentType: 'application/json',
+        headers: {
+          "usuario": usuario,
+        },
+      ),
+    );
 
     if (resp.statusCode == 200) {
       return true;
