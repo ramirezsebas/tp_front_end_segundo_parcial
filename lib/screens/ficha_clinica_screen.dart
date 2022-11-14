@@ -12,7 +12,11 @@ import '../widgets/card_footer.dart';
 import '../widgets/card_text.dart';
 
 class FichaClinicaScreen extends StatefulWidget {
-  const FichaClinicaScreen({Key? key}) : super(key: key);
+  final Future<List<FichaClinicaModel>>? futureFichasClinica;
+  const FichaClinicaScreen({
+    Key? key,
+    this.futureFichasClinica,
+  }) : super(key: key);
 
   @override
   State<FichaClinicaScreen> createState() => _FichaClinicaScreenState();
@@ -24,7 +28,7 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _futureFichasClinicas = getFichasClinicas();
+    _futureFichasClinicas = widget.futureFichasClinica ?? getFichasClinicas();
   }
 
   Future<List<FichaClinicaModel>> getFichasClinicas() async {
