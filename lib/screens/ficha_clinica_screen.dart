@@ -145,7 +145,7 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
                               if (!mounted) {
                                 return;
                               }
-                              Navigator.push(
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -159,6 +159,10 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
                                   ),
                                 ),
                               );
+
+                              setState(() {
+                                _futureFichasClinicas = getFichasClinicas();
+                              });
                             },
                             onDelete: () => deleteFichaClinica(
                               currentFicha.idFichaClinica!,

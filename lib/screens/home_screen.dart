@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             final personas = await personaService.getPersonas();
             final tiposProductos = await tipoProductoService.getTipoProductos();
-            Navigator.of(context).push(
+            await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => CreateFichaClinicaScreen(
                     personas: personas, tiposProductos: tiposProductos),
