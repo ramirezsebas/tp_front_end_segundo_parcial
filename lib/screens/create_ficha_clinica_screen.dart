@@ -55,6 +55,13 @@ class _CreateFichaClinicaScreenState extends State<CreateFichaClinicaScreen> {
           );
           try {
             await fichaClinicaService.createFichaClinica(fichaClinicaDto);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Se creo correectamente"),
+              ),
+            );
+
+            Navigator.of(context).pop();
           } catch (e) {
             print(e);
             ScaffoldMessenger.of(context).showSnackBar(
