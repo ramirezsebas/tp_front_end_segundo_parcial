@@ -7,12 +7,14 @@ import '../services/ficha_clinica_service.dart';
 
 class UpdateFichaClinicaScreen extends StatefulWidget {
   final List<PersonaModel> personas;
+  final String idFichaClinica;
   final List<TipoProductoModel> tiposProductos;
   final FichaClinicaDto fichaClinica;
 
   const UpdateFichaClinicaScreen({
     Key? key,
     required this.personas,
+    required this.idFichaClinica,
     required this.tiposProductos,
     required this.fichaClinica,
   }) : super(key: key);
@@ -30,7 +32,7 @@ class _UpdateFichaClinicaScreenState extends State<UpdateFichaClinicaScreen> {
   String diagnostico = "";
   String observaciones = "";
 
-  updateFichaClinica() {
+  updateFichaClinica(String idFichaClinica) async {
     final fichaClinicaService = FichaClinicaService();
     final fichaClinicaDto = FichaClinicaDto(
       motivoConsulta: motivoConsulta,
@@ -41,7 +43,8 @@ class _UpdateFichaClinicaScreenState extends State<UpdateFichaClinicaScreen> {
       idTipoProducto: selectedTipoProducto,
     );
     try {
-      fichaClinicaService.updateFichaClinica(fichaClinicaDto);
+      await fichaClinicaService.updateFichaClinica(
+          idFichaClinica, fichaClinicaDto);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Se creo correectamente"),
@@ -85,10 +88,11 @@ class _UpdateFichaClinicaScreenState extends State<UpdateFichaClinicaScreen> {
             idTipoProducto: selectedTipoProducto,
           );
           try {
-            await fichaClinicaService.updateFichaClinica(fichaClinicaDto);
+            await fichaClinicaService.updateFichaClinica(
+                widget.idFichaClinica, fichaClinicaDto);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text("Se creo correectamente"),
+                content: Text("Se actualizo correectamente"),
               ),
             );
 

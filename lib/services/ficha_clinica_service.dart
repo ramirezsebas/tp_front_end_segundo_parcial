@@ -35,12 +35,15 @@ class FichaClinicaService {
     }
   }
 
-  Future<bool> updateFichaClinica(FichaClinicaDto fichaClinica) async {
+  Future<bool> updateFichaClinica(
+      String idFichaClinica, FichaClinicaDto fichaClinica) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/fichaClinica";
 
     final resp = await dio.put(
       url,
-      data: fichaClinica.toJson(),
+      data: fichaClinica.toJson2(
+        idFichaClinica,
+      ),
       options: Options(
         headers: {
           "usuario": GetStorage().read('token'),

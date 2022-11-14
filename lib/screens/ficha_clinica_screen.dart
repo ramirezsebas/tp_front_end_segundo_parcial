@@ -150,6 +150,8 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       UpdateFichaClinicaScreen(
+                                    idFichaClinica:
+                                        currentFicha.idFichaClinica.toString(),
                                     fichaClinica:
                                         currentFicha.toFichaClinicaDto(),
                                     personas: personas,

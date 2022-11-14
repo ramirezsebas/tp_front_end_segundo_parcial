@@ -39,4 +39,19 @@ class FichaClinicaDto {
           "idTipoProducto": idTipoProducto,
         },
       };
+  Map<String, dynamic> toJson2(String id) => {
+        "idFichaClinica": id,
+        "motivoConsulta": motivoConsulta,
+        "diagnostico": diagnostico,
+        "observacion": observacion,
+        "idEmpleado": {
+          "idPersona": idEmpleado,
+        },
+        "idCliente": {
+          "idPersona": idCliente,
+        },
+        "idTipoProducto": {
+          "idTipoProducto": idTipoProducto,
+        },
+      };
 }
