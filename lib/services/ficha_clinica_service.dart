@@ -35,10 +35,18 @@ class FichaClinicaService {
     }
   }
 
-  Future<bool> updateFichaClinica(FichaClinicaModel fichaClinica) async {
+  Future<bool> updateFichaClinica(FichaClinicaDto fichaClinica) async {
     String url = "https://equipoyosh.com/stock-nutrinatalia/fichaClinica";
 
-    final resp = await dio.put(url, data: fichaClinica.toJson());
+    final resp = await dio.put(
+      url,
+      data: fichaClinica.toJson(),
+      options: Options(
+        headers: {
+          "usuario": GetStorage().read('token'),
+        },
+      ),
+    );
 
     if (resp.statusCode == 200) {
       return true;

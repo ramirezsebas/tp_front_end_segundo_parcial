@@ -2,6 +2,7 @@
 //
 //     final fichaClinicaModel = fichaClinicaModelFromJson(jsonString);
 
+import 'package:tp_front_end_segundo_parcial/models/ficha_clinica_dto.dart';
 import 'package:tp_front_end_segundo_parcial/models/persona_model.dart';
 import 'dart:convert';
 
@@ -92,4 +93,26 @@ class FichaClinicaModel {
         "fechaHastaCadena": fechaHastaCadena,
         "todosLosCampos": todosLosCampos,
       };
+
+  FichaClinicaDto toFichaClinicaDto() {
+    return FichaClinicaDto(
+      motivoConsulta: motivoConsulta ?? "",
+      diagnostico: diagnostico ?? "",
+      observacion: observacion ?? "",
+      idEmpleado: idEmpleado?.idPersona.toString() ?? "",
+      idCliente: idCliente?.idPersona.toString() ?? "",
+      idTipoProducto: idTipoProducto?.idTipoProducto.toString() ?? "",
+    );
+  }
+
+  toDto() {
+    return {
+      "motivoConsulta": motivoConsulta,
+      "diagnostico": diagnostico,
+      "observaciones": observacion,
+      "idEmpleado": idEmpleado,
+      "idCliente": idCliente,
+      "idTipoProducto": idTipoProducto,
+    };
+  }
 }

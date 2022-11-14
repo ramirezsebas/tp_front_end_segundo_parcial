@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_front_end_segundo_parcial/screens/update_ficha_clinica_screen.dart';
 import 'package:tp_front_end_segundo_parcial/services/ficha_clinica_service.dart';
 import 'package:tp_front_end_segundo_parcial/widgets/custom_card.dart';
 
 import '../core/utils/custom_dialog.dart';
 import '../models/ficha_clinica_model.dart';
+import '../services/persona_service.dart';
+import '../services/tipo_producto_service.dart';
 import '../widgets/card_footer.dart';
 import '../widgets/card_text.dart';
 
@@ -128,6 +131,33 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
                                 "Nombre del Cliente identificado",
                           ),
                           CardFooter(
+                            onEdit: () async {
+                              final PersonaService personaService =
+                                  PersonaService();
+                              final TipoProductoService tipoProductoService =
+                                  TipoProductoService();
+
+                              final personas =
+                                  await personaService.getPersonas();
+                              final tiposProductos =
+                                  await tipoProductoService.getTipoProductos();
+
+                              if (!mounted) {
+                                return;
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      UpdateFichaClinicaScreen(
+                                    fichaClinica:
+                                        currentFicha.toFichaClinicaDto(),
+                                    personas: personas,
+                                    tiposProductos: tiposProductos,
+                                  ),
+                                ),
+                              );
+                            },
                             onDelete: () => deleteFichaClinica(
                               currentFicha.idFichaClinica!,
                             ),
