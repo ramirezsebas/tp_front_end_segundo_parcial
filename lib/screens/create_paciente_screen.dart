@@ -1,8 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 import 'package:tp_front_end_segundo_parcial/models/persona_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:tp_front_end_segundo_parcial/services/persona_service.dart';
@@ -273,10 +271,17 @@ class _CreatePacienteScreenState extends State<CreatePacienteScreen> {
                             print('persona a mandar: ${personaModel.toJson()}');
                           }
                           personaService.createPersona(personaModel).then(
-                                (String value) => ScaffoldMessenger.of(context)
-                                    .showSnackBar(
-                                        SnackBar(content: Text(value))),
+                            (String value) {
+                              Navigator.pop(context);
+                              return ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(value),
+                                ),
                               );
+                            },
+                          ).catchError((Object error) =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(error.toString()))));
                         }
                       },
                       child: const Text('Crear')),
